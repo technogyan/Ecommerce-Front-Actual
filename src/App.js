@@ -5,6 +5,7 @@ import SignUp from './Components/SignUp';
 import Products from './Components/Products';
 import SingleProduct from './Components/SingleProduct';
 import { useState } from 'react';
+import Cart from './Components/Cart';
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/login' Component={Login} />
           <Route path='/register' Component={SignUp} />
           <Route path='/singleproduct/:id' Component={SingleProduct} />
+          <Route path='/cart/' Component={Cart} />
 
           {/* Routes */}
         </Routes>
