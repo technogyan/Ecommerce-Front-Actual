@@ -6,10 +6,12 @@ import Products from './Components/Products';
 import SingleProduct from './Components/SingleProduct';
 import { useState } from 'react';
 import Cart from './Components/Cart';
-
+import { useSelector } from 'react-redux';
 
 
 function App() {
+  const item=useSelector((state) => state.cart);
+
 
   function Logout() {
     localStorage.clear();
@@ -199,10 +201,10 @@ function App() {
 
 
               <li class="nav-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
-                <a class="nav-link position-relative" href="javascript:;">
-                  <div class="cart-badge">10</div>
+               <NavLink to='/cart' className="nav-link position-relative"> 
+                  <div class="cart-badge">{item.length}</div>
                   <i class="bi bi-basket2"></i>
-                </a>
+                  </NavLink>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="account-dashboard.html"><i class="bi bi-person-circle"></i></a>

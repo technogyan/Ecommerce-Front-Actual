@@ -3,9 +3,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
+import { add } from '../Redux/CartSlice';
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Products = () => {
   const swiperRef = useRef(null);
+
+  const dispatch=useDispatch();
 
   useEffect(() => {
     products();
@@ -56,7 +61,14 @@ const Products = () => {
   useEffect(() => {
     // Effect function
   }, [prductdata]);
+
+  const handleadd=(product)=>{
+    dispatch(add(product))
+  }
   console.log(categdata)
+ 
+ 
+ 
   return (
     <>
       {/* <!--start page content--> */}
@@ -186,7 +198,7 @@ const Products = () => {
                       <div
                         class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
                         <NavLink><i class="bi bi-heart"></i></NavLink>
-                        <NavLink><i class="bi bi-basket3"></i> </NavLink> 
+                        <NavLink onClick={()=>handleadd(item)}><i class="bi bi-basket3"></i> </NavLink> 
                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
                           class="bi bi-zoom-in"></i></a>
                       </div>
