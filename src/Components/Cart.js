@@ -69,7 +69,6 @@ const Cart = () => {
                           </div>
                           <div class="d-none d-lg-block vr"></div>
                           <div class="d-grid gap-2 align-self-start align-self-lg-center">
-                            <span >Remove</span>
                             <button onClick={()=>handleremove(item.id)} type="button" class="btn btn-ecomm"><i class="bi bi-x-lg me-2"></i>Remove</button>
                             <button type="button" class="btn dark btn-ecomm"><i class="bi bi-suit-heart me-2"></i>Move to Wishlist</button>
                           </div>
