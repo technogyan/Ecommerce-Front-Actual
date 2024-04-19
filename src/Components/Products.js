@@ -1,16 +1,18 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, json } from 'react-router-dom';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
-import { add } from '../Redux/CartSlice';
+import { addItem } from '../Redux/CartSlice';
 import { useDispatch, useSelector } from "react-redux";
+import Cart from './Cart';
 
 
 const Products = () => {
+
   const swiperRef = useRef(null);
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     products();
@@ -20,7 +22,7 @@ const Products = () => {
       swiperRef.current = new Swiper('.swiper-container', {
         // Your Swiper settings here
         slidesPerView: 8,
-        spaceBetween:90,
+        spaceBetween: 90,
         loop: true,
         navigation: {
           nextEl: '.swiper-button-next',
@@ -62,13 +64,15 @@ const Products = () => {
     // Effect function
   }, [prductdata]);
 
-  const handleadd=(product)=>{
-    dispatch(add(product))
+  const handleadd = (product) => {
+    dispatch(addItem(product))
   }
+
+
   console.log(categdata)
- 
- 
- 
+
+
+
   return (
     <>
       {/* <!--start page content--> */}
@@ -191,20 +195,21 @@ const Products = () => {
             </div>
             <div class="product-thumbs">
               {
-                prductdata.map(item => (
 
-                   <div key={item.id} class="card">
+                prductdata.map((item, index) => (
+                  index < 4 &&
+                  (<div key={item.id} class="card">
                     <div class="position-relative overflow-hidden">
                       <div
                         class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
                         <NavLink><i class="bi bi-heart"></i></NavLink>
-                        <NavLink onClick={()=>handleadd(item)}><i class="bi bi-basket3"></i> </NavLink> 
+                        <NavLink onClick={() => handleadd(item)}><i class="bi bi-basket3"></i> </NavLink>
                         <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
                           class="bi bi-zoom-in"></i></a>
                       </div>
-                      <Link  to={`/singleproduct/${item.id}`}>
+                      <Link to={`/singleproduct/${item.id}`}>
                         <img src={item.category.image} class="card-img-top" alt="..." />
-                        </Link> 
+                      </Link>
                     </div>
                     <div class="card-body">
                       <div class="product-info text-center">
@@ -220,9 +225,10 @@ const Products = () => {
                       </div>
                     </div>
                   </div>
-                 
 
-                ))
+
+
+                  )))
 
 
               }
@@ -459,7 +465,7 @@ const Products = () => {
                           </div>
                         </div>
                       </div>
-                      </NavLink>
+                    </NavLink>
                   </div>
                 ))}
               </div>

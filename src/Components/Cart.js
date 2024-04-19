@@ -1,14 +1,14 @@
 import React from 'react'
 import {useSelector,useDispatch } from 'react-redux';
-import {remove} from '../Redux/CartSlice';
+import {removeItem} from '../Redux/CartSlice';
 
 const Cart = () => {
   const dispatch=useDispatch();
-  const cartitem = useSelector((state) => state.cart);
-
+  //const cartitem = useSelector((state) => state.cart);
+  const cartitem=JSON.parse(localStorage.getItem('productsInCart'));
   const handleremove = (id) => {
     console.log(id); // Log the id to the console for debugging
-    dispatch(remove(id)); // Dispatch the remove action with the id
+    dispatch(removeItem(id)); // Dispatch the remove action with the id
   };
 
   return (
