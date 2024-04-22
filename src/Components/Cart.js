@@ -1,15 +1,22 @@
-import React from 'react'
-import {useSelector,useDispatch } from 'react-redux';
-import {removeItem} from '../Redux/CartSlice';
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem, updateQuantity, increaseItemQuantity, decreaseItemQuantity } from '../Redux/CartSlice';
 
 const Cart = () => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   //const cartitem = useSelector((state) => state.cart);
-  const cartitem=JSON.parse(localStorage.getItem('productsInCart'));
+  const cartitem = JSON.parse(localStorage.getItem('productsInCart'));
   const handleremove = (id) => {
     console.log(id); // Log the id to the console for debugging
     dispatch(removeItem(id)); // Dispatch the remove action with the id
   };
+
+  const handleChange = (e, item) => {
+    const newQuantity = parseInt(e.target.value); // Parse the input value to an integer
+    updateQuantity(item.id, newQuantity); // Dispatch action to update quantity
+  };
+
+
 
   return (
     <>
@@ -64,12 +71,43 @@ const Cart = () => {
                             </div>
                             <div class="mt-3 hstack gap-2">
                               <button type="button" class="btn btn-sm btn-light border rounded-0" data-bs-toggle="modal" data-bs-target="#SizeModal">Size : M</button>
-                              <button type="button" class="btn btn-sm btn-light border rounded-0" data-bs-toggle="modal" data-bs-target="#QtyModal">Qty : 1</button>
+                              <button
+                                className="btn btn-primary px-3 me-2"
+                                onClick={() =>
+                                  dispatch(decreaseItemQuantity(item.id))
+                                }
+                              >
+                                <i className="fas fa-minus"></i>
+                              </button>
+
+                              <div>
+                                <input
+                                  id="form1"
+                                  min="0"
+                                  name="quantity"
+                                  value={item.quantity || ''}
+                                  type="number"
+                                  className="form-control"
+                                  onChange={(e) => handleChange(e, item.id)} // Pass item.id along with the event
+                                />
+                                <label className="form-label" for="form1">
+                                  Quantity
+                                </label>
+                              </div>
+
+                              <button
+                                className="btn btn-primary px-3 ms-2"
+                                onClick={() =>
+                                  dispatch(increaseItemQuantity(item.id))
+                                }
+                              >
+                                <i className="fas fa-plus"></i>
+                              </button>
                             </div>
                           </div>
                           <div class="d-none d-lg-block vr"></div>
                           <div class="d-grid gap-2 align-self-start align-self-lg-center">
-                            <button onClick={()=>handleremove(item.id)} type="button" class="btn btn-ecomm"><i class="bi bi-x-lg me-2"></i>Remove</button>
+                            <button onClick={() => handleremove(item.id)} type="button" class="btn btn-ecomm"><i class="bi bi-x-lg me-2"></i>Remove</button>
                             <button type="button" class="btn dark btn-ecomm"><i class="bi bi-suit-heart me-2"></i>Move to Wishlist</button>
                           </div>
                         </div>
