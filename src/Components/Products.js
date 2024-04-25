@@ -9,7 +9,7 @@ import Cart from './Cart';
 
 
 const Products = () => {
-  const cartItems = useSelector(state => state.cart.items);
+  var cartItems = useSelector(state => state.cart.items);
 
   const swiperRef = useRef(null);
 
@@ -66,8 +66,10 @@ const Products = () => {
   }, [prductdata]);
 
   const handleadd = (product) => {
-    dispatch(addItem(product))
-    
+    dispatch(addItem({
+      ...product,
+      quantity: 1
+  }))
   }
 
 

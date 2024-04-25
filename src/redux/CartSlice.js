@@ -6,65 +6,32 @@ const cartSlice = createSlice({
     items: JSON.parse(localStorage.getItem('productsInCart')) || [],
   },
   reducers: {
-    addItem(state, action) {
-      const newItem = action.payload;
-      const existingItem = state.items.find(item => item.id === newItem.id);
 
-      if (existingItem) {
-        // If the item already exists, increase its quantity
-        existingItem.quantity += newItem.quantity || 1; // Increment by the quantity of the new item or default to 1
+    addItem(state, action) {
+      const check = state.items.findIndex(book => book.id === action.payload.id)
+      if (check !== -1) {
+        state.items[check].quantity += action.payload.quantity
       } else {
-        // If the item doesn't exist, add it to the cart with its quantity
-        const quantityToAdd = newItem.quantity || 1; // Default to 1 if quantity is not provided
-        state.items.push({ ...newItem, quantity: quantityToAdd });
+        state.items.push(action.payload)
       }
       localStorage.setItem('productsInCart', JSON.stringify(state.items));
+      state.total = state.items.reduce((sum, book) => sum + +book?.price * book?.quantity, 0)
     },
-    
-    removeItem(state, action) {
-      const idToRemove = action.payload;
-      const indexToRemove = state.items.findIndex(item => item.id === idToRemove);
-      if (indexToRemove !== -1) {
-        state.items.splice(indexToRemove, 1);
-        localStorage.setItem('productsInCart', JSON.stringify(state.items));
-      }
-    },
-    
     updateQuantity(state, action) {
-      const { id, quantity } = action.payload;
-      const itemToUpdate = state.items.find(item => item.id === id);
-      if (itemToUpdate) {
-        itemToUpdate.quantity = quantity;
-        localStorage.setItem('productsInCart', JSON.stringify(state.items));
+      const check = state.items.findIndex(book => book.id === action.payload.id)
+      if (check !== -1) {
+        state.items[check].quantity = action.payload.quantity
       }
+      localStorage.setItem('productsInCart', JSON.stringify(state.items));
+      state.total = state.items.reduce((sum, book) => sum + +book?.price * book?.quantity, 0)
     },
-    
-    increaseItemQuantity: (state, action) => {
-      state.items = state.items.map((item) => {
-        if (item.id === action.payload) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      });
-    },
-    decreaseItemQuantity: (state, action) => {
-      state.items = state.items.map((item) => {
-        if (item.id === action.payload) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      });
-    },
-    clearCart(state) {
-      state.items = [];
-      localStorage.removeItem('productsInCart');
-    },
-    
-    calculateTotal(state) {
-      return state.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    },
+    removeItem(state, action) {
+      state.items = state.items.filter(book => book.id !== action.payload.id)
+      state.total = state.items.reduce((sum, book) => sum + +book?.price * book?.quantity, 0)
+      localStorage.setItem('productsInCart', JSON.stringify(state.items));
+    }
   },
 });
 
-export const { increaseItemQuantity,decreaseItemQuantity,addItem, removeItem, updateQuantity, clearCart, calculateTotal } = cartSlice.actions;
+export const { addItem, removeItem, updateQuantity} = cartSlice.actions;
 export default cartSlice.reducer;
