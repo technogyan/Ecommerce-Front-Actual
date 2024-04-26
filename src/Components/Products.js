@@ -456,6 +456,7 @@ const Products = () => {
             <div className="swiper-container">
               <div className="swiper-wrapper">
                 {categdata.map((item, index) => (
+                  index<4 && (
                   <div key={index} className="swiper-slide">
                     {/* Your slide content here */}
                     <NavLink to=''>
@@ -471,6 +472,7 @@ const Products = () => {
                       </div>
                     </NavLink>
                   </div>
+                  )
                 ))}
               </div>
               <div className="swiper-button-prev"></div>

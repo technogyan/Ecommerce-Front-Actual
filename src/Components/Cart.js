@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity, increaseItemQuantity, decreaseItemQuantity } from '../Redux/CartSlice';
-import MainCart from './MainCart';
+import MainCart from './MainCart'
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartitem = useSelector((state) => state.cart.items);
-
+  const cartitem =useSelector((state) => state.cart.items);
+  const carttotal =useSelector((state) => state.cart);
+  const total=carttotal.total
 
   return (
     <>
@@ -65,22 +65,22 @@ const Cart = () => {
                     <h5 class="fw-bold mb-4">Order Summary</h5>
                     <div class="hstack align-items-center justify-content-between">
                       <p class="mb-0">Bag Total</p>
-                      <p class="mb-0">$599.00</p>
+                      <p class="mb-0">{total}</p>
                     </div>
-                    <hr />
-                    <div class="hstack align-items-center justify-content-between">
+                    
+                    {/* <div class="hstack align-items-center justify-content-between">
                       <p class="mb-0">Bag discount</p>
                       <p class="mb-0 text-success">- $178.00</p>
-                    </div>
-                    <hr />
-                    <div class="hstack align-items-center justify-content-between">
+                    </div> */}
+                  
+                    {/* <div class="hstack align-items-center justify-content-between">
                       <p class="mb-0">Delivery</p>
                       <p class="mb-0">$29.00</p>
-                    </div>
+                    </div> */}
                     <hr />
                     <div class="hstack align-items-center justify-content-between fw-bold text-content">
                       <p class="mb-0">Total Amount</p>
-                      <p class="mb-0">$393.00</p>
+                      <p class="mb-0">{total}</p>
                     </div>
                     <div class="d-grid mt-4">
                       <button type="button" class="btn btn-dark btn-ecomm py-3 px-5">Place Order</button>

@@ -21,7 +21,7 @@ const MainCart = (item) => {
     useEffect(() => {
         setTotalPrice(item.data.price * quantity)
         dispatch(updateQuantity({ id: item.data?.id, quantity }))
-        console.log(`id${item.data?.id} and quantity ${item.data?.quantity}`)
+        
     }, [quantity, item.data?.price, item.data?.id, dispatch])
 
 
@@ -31,12 +31,12 @@ const MainCart = (item) => {
                 <div class="card-body">
                     <div class="d-flex flex-column flex-lg-row gap-3">
                         <div class="product-img">
-                            <img src={item.image} width="150" alt="" />
+                            <img src={item.data.category.image} width="150" alt="" />
                         </div>
                         <div class="product-info flex-grow-1">
-                            <h5 class="fw-bold mb-0">{item.title}</h5>
+                            <h5 class="fw-bold mb-0">{item.data.title}</h5>
                             <div class="product-price d-flex align-items-center gap-2 mt-3">
-                                <div class="h6 fw-bold">{item.price}</div>
+                                <div class="h6 fw-bold">Rs {item.data.price}</div>
                                 <div class="h6 fw-light text-muted text-decoration-line-through">$2089</div>
                                 <div class="h6 fw-bold text-danger">(70% off)</div>
                             </div>
