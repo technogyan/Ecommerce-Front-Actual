@@ -9,7 +9,7 @@ import Cart from './Components/Cart';
 import { useDispatch, useSelector } from 'react-redux';
 import Shop from './Components/Shop';
 import axios from 'axios';
-import { savedata } from './Redux/DataReducer';
+import { savedata } from './redux/DataReducer';
 
 
 function App() {

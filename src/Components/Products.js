@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, json } from 'react-router-dom';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
-import { addItem } from '../Redux/CartSlice';
+import { addItem } from '../redux/CartSlice';
 import { useDispatch, useSelector } from "react-redux";
 import Cart from './Cart';
-import { savedata } from '../Redux/DataReducer';
+import { savedata } from '../redux/DataReducer';
 
 
 const Products = () => {

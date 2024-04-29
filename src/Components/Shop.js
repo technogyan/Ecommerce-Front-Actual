@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { addItem } from '../Redux/CartSlice';
+import { addItem } from '../redux/CartSlice';
 
 const Shop = () => {
     const dispatch =useDispatch();

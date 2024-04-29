@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity, increaseItemQuantity, decreaseItemQuantity } from '../Redux/CartSlice';
+import { removeItem, updateQuantity, increaseItemQuantity, decreaseItemQuantity } from '../redux/CartSlice';
 
 const MainCart = (item) => {
     const dispatch = useDispatch()

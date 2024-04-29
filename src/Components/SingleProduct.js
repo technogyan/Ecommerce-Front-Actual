@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom'
-import { addItem } from '../Redux/CartSlice';
+import { addItem } from '../redux/CartSlice';
 
 
 const SingleProduct = (props) => {
