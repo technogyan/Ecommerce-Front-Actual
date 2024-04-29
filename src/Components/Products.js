@@ -6,6 +6,7 @@ import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import { addItem } from '../Redux/CartSlice';
 import { useDispatch, useSelector } from "react-redux";
 import Cart from './Cart';
+import { savedata } from '../Redux/DataReducer';
 
 
 const Products = () => {
@@ -18,19 +19,7 @@ const Products = () => {
   useEffect(() => {
     products();
     category();
-    // Initialize Swiper instance after data is loaded
-    if (categdata.length > 0 && !swiperRef.current) {
-      swiperRef.current = new Swiper('.swiper-container', {
-        // Your Swiper settings here
-        slidesPerView: 8,
-        spaceBetween: 90,
-        loop: true,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-      });
-    }
+   
   }, [])
 
   const [prductdata, setdata] = useState([]);
@@ -40,8 +29,9 @@ const Products = () => {
     try {
 
       const response = await axios.get('https://api.escuelajs.co/api/v1/products');
-      setdata(response.data)
-
+      setdata(response.data);
+      dispatch(savedata(response.data));
+      
 
     } catch (error) {
       console.log(error)
@@ -65,16 +55,13 @@ const Products = () => {
     // Effect function
   }, [prductdata]);
 
+  console.log(prductdata)
   const handleadd = (product) => {
     dispatch(addItem({
       ...product,
       quantity: 1
   }))
   }
-
-
-  console.log(categdata)
-
 
 
   return (

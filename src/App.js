@@ -6,23 +6,47 @@ import Products from './Components/Products';
 import SingleProduct from './Components/SingleProduct';
 import { useEffect, useState } from 'react';
 import Cart from './Components/Cart';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Shop from './Components/Shop';
+import axios from 'axios';
+import { savedata } from './Redux/DataReducer';
 
 
 function App() {
-  
+
   const cartitem = useSelector(state => state.cart.items);
- 
- 
-  
+
+
+
 
   function Logout() {
     localStorage.clear();
     window.location.href('/')
   }
 
+  const dispatch = useDispatch();
 
   const user = localStorage.getItem('user')
+  const [prductdata, setdata] = useState([]);
+  const [categdata, setcategdata] = useState([]);
+
+  useEffect(() => {
+    products();
+
+  }, [])
+
+  const products = async () => {
+    try {
+
+      const response = await axios.get('https://api.escuelajs.co/api/v1/products');
+      setdata(response.data);
+      dispatch(savedata(response.data));
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <Router>
       <div className="App">
@@ -33,7 +57,8 @@ function App() {
           <Route path='/login' Component={Login} />
           <Route path='/register' Component={SignUp} />
           <Route path='/singleproduct/:id' Component={SingleProduct} />
-          <Route path='/cart/' Component={Cart} />
+          <Route path='/cart' Component={Cart} />
+          <Route path='/shop' Component={Shop} />
 
           {/* Routes */}
         </Routes>
@@ -68,7 +93,7 @@ function App() {
                 <ul class="navbar-nav justify-content-start flex-grow-1 gap-1">
                   <li class="nav-item my-auto">
 
-                    <NavLink to='/' class="nav-link my-auto">Home</NavLink>
+                    <NavLink to='/' class="nav-link my-auto ms-2 text-start">Home</NavLink>
                   </li>
                   {/* <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="tv-shows.html" data-bs-toggle="dropdown">
@@ -147,12 +172,12 @@ function App() {
                         <li><a class="dropdown-item" href="search.html">Search</a></li>
                       </ul>
                     </li> */}
-                  <li class="nav-item">
+                  {/* <li class="nav-item">
                     <a class="nav-link" href="about-us.html">About</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="contact-us.html">Contact</a>
-                  </li>
+                  </li> */}
                   {/* <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
                       Account
@@ -178,18 +203,22 @@ function App() {
                         <li><a class="dropdown-item" href="blog-read.html">Blog Read</a></li>
                       </ul>
                     </li> */}
+                  <li class="nav-item my-auto ms-2 text-start">
+                  <NavLink to='/shop' class="nav-item my-auto me-3 ms-3">Shop</NavLink>
+                  </li>
 
+                 
                   {
-                    user ? <li class="nav-item my-auto me-3">
+                    user ? <li class="nav-item my-auto ms-2 text-start">
                       <a class="nav-link" onClick={Logout}>Logout</a>
                     </li>
                       :
                       <>
-                        <li class="nav-item my-auto me-3">
+                        <li class="nav-item my-auto ms-2 text-start">
                           <NavLink class="nav-link" to='/login'>Login</NavLink>
                         </li>
 
-                        <li class="nav-item my-auto">
+                        <li class="nav-item my-auto ms-2 text-start">
                           <NavLink class="nav-link" to='/register'>Signup</NavLink>
                         </li>
                       </>

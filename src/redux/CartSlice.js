@@ -27,6 +27,7 @@ const cartSlice = createSlice({
     },
     removeItem(state, action) {
       state.items = state.items.filter(book => book.id !== action.payload.id)
+      localStorage.setItem('productsInCart', JSON.stringify(state.items));
       state.total = state.items.reduce((sum, book) => sum + +book?.price * book?.quantity, 0)
       
     }
